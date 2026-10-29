@@ -12,8 +12,9 @@ jobs:
 
       - name: Unzip project
         run: |
-          ls -la
-          unzip -q "$(ls *.zip | head -n1)" -d app
+          ZIP=$(find . -name "*.zip" -not -path "./.git/*" | head -n1)
+          echo "Found: $ZIP"
+          unzip -q "$ZIP" -d app
           PKG=$(find app -name package.json -not -path "*/node_modules/*" | head -n1)
           echo "APP_DIR=$(dirname "$PKG")" >> $GITHUB_ENV
 
